@@ -89,11 +89,8 @@ class WSHTTPHandler(BaseHTTPRequestHandler):
               )
 
               control.on_joystick(
-                float(obj.get("angleDeg", 0)),
-                float(obj.get("strength", 0)),
                 float(obj.get("x", 0)),
-                float(obj.get("y", 0)),
-                float(obj.get("t", time.time()))
+                float(obj.get("y", 0))
               )
 
               # (기존) 콘솔 출력 및 브로드캐스트 유지

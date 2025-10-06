@@ -44,6 +44,26 @@
     }
   });
 
+  const JOYSTICK_HZ = 10; // 조이스틱 폴링레이트
+  let latest = { angleDeg: 0, strength: 0, x: 0, y: 0, angleRad: 0 };
+
+  // 10Hz로 현재 조이스틱 스냅샷을 항상 전송 (정지 중이면 0,0을 계속 보냄)
+  setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(
+        JSON.stringify({
+          type: "joystick",
+          angleRad: latest.angleRad,
+          angleDeg: latest.angleDeg,
+          strength: latest.strength,
+          x: latest.x,
+          y: latest.y,
+          t: Date.now(),
+        })
+      );
+    }
+  }, 1000 / JOYSTICK_HZ);
+
   const el = document.getElementById("joystick");
   const knob = document.getElementById("stick");
   const angleEl = document.getElementById("angle");
@@ -189,18 +209,10 @@
   // 외부에서 값 구독
   el.addEventListener("joystick", (e) => {
     const { angleRad, angleDeg, strength, x, y } = e.detail;
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.send(
-        JSON.stringify({
-          type: "joystick",
-          angleRad,
-          angleDeg,
-          strength,
-          x,
-          y,
-          t: Date.now(),
-        })
-      );
-    }
+    latest.angleRad = angleRad;
+    latest.angleDeg = angleDeg;
+    latest.strength = strength;
+    latest.x = x;
+    latest.y = y;
   });
 })();
