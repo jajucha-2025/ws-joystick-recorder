@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+.DS_Store
+capture.sqlite3
+capture.sqlite3-shm
+capture.sqlite3-wal

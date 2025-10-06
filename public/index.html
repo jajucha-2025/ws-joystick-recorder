@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Joystick</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Joystick</h1>
+
+      <div id="joystick" class="joystick">
+        <div
+          class="stick"
+          id="stick"
+          aria-label="joystick handle"
+          role="slider"
+          aria-valuemin="0"
+          aria-valuemax="1"
+        ></div>
+      </div>
+
+      <div class="panel" style="margin-top: 12px">
+        <div>Camera</div>
+        <img
+          id="live"
+          alt="live"
+          style="max-width: 100%; border: 1px solid #e5e5e5; border-radius: 8px"
+        />
+      </div>
+
+      <div class="panel">
+        <div>각도(deg): <span id="angle">0</span></div>
+        <div>세기(0~1): <span id="strength">0.00</span></div>
+        <div>벡터 x,y(-1~1): <span id="vec">0.00, 0.00</span></div>
+      </div>
+
+      <button
+        id="recBtn"
+        style="
+          padding: 10px 14px;
+          border: 0;
+          border-radius: 10px;
+          background: #222;
+          color: #fff;
+        "
+      >
+        ⏺ Start Recording
+      </button>
+    </main>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>

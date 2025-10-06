@@ -1,0 +1,73 @@
+:root {
+  --size: 220px; /* 조이스틱 바닥 직경 */
+  --knob: 72px; /* 스틱(손잡이) 직경 */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.joystick {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  margin: 16px 0;
+  background: radial-gradient(
+    120px 120px at 50% 50%,
+    #f8f8f8 0%,
+    #ececec 60%,
+    #e2e2e2 100%
+  );
+  border: 1px solid #d0d0d0;
+  box-shadow: inset 0 8px 18px rgba(0, 0, 0, 0.12),
+    inset 0 -6px 12px rgba(255, 255, 255, 0.9), 0 6px 20px rgba(0, 0, 0, 0.08);
+  user-select: none;
+  touch-action: none; /* 기본 스크롤/줌 방지 (PointerEvents와 함께) */
+}
+
+.stick {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--knob);
+  height: var(--knob);
+  margin-left: calc(var(--knob) / -2);
+  margin-top: calc(var(--knob) / -2);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    #ffffff 0%,
+    #e9eef9 35%,
+    #b9c7e8 70%,
+    #91a3d7 100%
+  );
+  border: 1px solid #8aa1da;
+  box-shadow: inset 0 10px 18px rgba(255, 255, 255, 0.9),
+    inset 0 -12px 22px rgba(0, 0, 0, 0.12), 0 8px 22px rgba(0, 0, 0, 0.15);
+  transition: transform 120ms ease-out; /* 손 떼면 중앙 복귀 애니메이션 */
+  will-change: transform;
+}
+
+.panel {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: #fafafa;
+}
