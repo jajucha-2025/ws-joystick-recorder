@@ -1,7 +1,10 @@
 import threading, time
+from jchutils.math import pd_rk2
+import math
+
+_lock = threading.Lock()
 
 _state = {"angleDeg": 0.0, "strength": 0.0, "x": 0.0, "y": 0.0, "ts": 0.0}
-_lock = threading.Lock()
 
 def set_joystick(angleDeg, strength, x, y, ts=None):
   with _lock:
@@ -25,3 +28,13 @@ def set_recording(on: bool):
 def is_recording() -> bool:
   with _lock:
     return _recording
+
+_car = {"wheelbase": 1, "pos": (0.0, 0.0, 0.0)}
+
+def get_pos(wheelbase, dt, pos, steer_deg, v):
+  return pd_rk2(pos, v, math.radians(steer_deg), wheelbase, dt)
+
+def set_car(wheelbase, pos):
+  with _lock:
+    _car["wheelbase"] = float(wheelbase)
+    _car["pos"] = (float(pos[0]), float(pos[1]), float(pos[2]))
