@@ -44,7 +44,7 @@
     }
   });
 
-  const JOYSTICK_HZ = 10; // 조이스틱 폴링레이트
+  const JOYSTICK_HZ = 60; // 조이스틱 폴링레이트
   let latest = { angleDeg: 0, strength: 0, x: 0, y: 0, angleRad: 0 };
 
   // 10Hz로 현재 조이스틱 스냅샷을 항상 전송 (정지 중이면 0,0을 계속 보냄)

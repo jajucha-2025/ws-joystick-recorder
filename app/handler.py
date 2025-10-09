@@ -8,7 +8,7 @@ from .ws.handshake import MAGIC_GUID
 from .ws.protocol import parse_frame, send_text, send_pong, send_close
 from .ws.hub import add_client, remove_client, broadcast_text, broadcast_json
 import time
-from .state import set_joystick, set_recording
+from .state import set_joystick, set_recording, _car
 from . import control
 
 class WSHTTPHandler(BaseHTTPRequestHandler):
@@ -88,12 +88,20 @@ class WSHTTPHandler(BaseHTTPRequestHandler):
                 obj.get("t", time.time())
               )
 
+              now = time.perf_counter()
+              prev = getattr(self, "_last_js_mono", None)
+              dt = 0.1
+              if prev is not None:
+                dt = now - prev
+              self._last_js_mono = now
+
               control.on_joystick(
                 float(obj.get("x", 0)),
-                float(obj.get("y", 0))
+                float(obj.get("y", 0)),
+                dt
               )
-
-              # (기존) 콘솔 출력 및 브로드캐스트 유지
+              print(_car["pos"])
+              # 콘솔 출력 및 브로드캐스트 유지
               print(
                 f"[joystick] from={obj['from']} angleDeg={float(obj.get('angleDeg', 0)):.1f} "
                 f"strength={float(obj.get('strength', 0)):.2f} x={float(obj.get('x', 0)):.2f} y={float(obj.get('y', 0)):.2f}",
