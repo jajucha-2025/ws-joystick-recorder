@@ -32,7 +32,8 @@ def is_recording() -> bool:
 _car = {"wheelbase": 18, "trackspacing": 15, "pos": (0.0, 0.0, 0.0), "isFirst": True}
 
 def get_pos(wheelbase, dt, pos, steerL_deg, steerR_deg, v):
-  return pd_euler(pos, v, math.radians(steerL_deg), math.radians(steerR_deg), wheelbase, dt)
+  pos = pd_euler(pos, v, math.radians(steerL_deg), math.radians(steerR_deg), wheelbase, dt)
+  return pos
 
 def set_car(wheelbase, trackspacing, pos):
   with _lock:
